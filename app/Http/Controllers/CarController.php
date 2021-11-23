@@ -18,7 +18,7 @@ class CarController extends Controller
     public function index(Request $request)
     {
         $per_page = $request->query('per_page', 10);
-        $cars = Car::all()->paginate($per_page);
+        $cars = Car::paginate($per_page);
 
         return response()->json($cars);
     }
