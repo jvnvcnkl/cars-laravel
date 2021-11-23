@@ -27,13 +27,13 @@ class UpdateCarRequest extends FormRequest
     public function rules()
     {
         return [
-            'brand' => 'required|string',
-            'model' => 'required|string',
+            'brand' => 'required|min:2|string',
+            'model' => 'required|min:2|string',
             'year' => 'required|integer',
-            'max_speed' => 'required|integer',
+            'max_speed' => 'integer|between:20,300',
             'is_automatic' => 'required|bool',
             'engine' => 'required|in' . implode(',', $this->engine),
-            'number_of_doors' => 'required|integer',
+            'number_of_doors' => 'required|integer|between:2,5',
         ];
     }
 }
