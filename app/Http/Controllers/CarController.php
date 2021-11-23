@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Http\Requests\CreateCarRequest;
+use App\Http\Requests\UpdateCarRequest;
+
 
 class CarController extends Controller
 {
@@ -25,17 +28,10 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCarRequest $request)
     {
-        $car = Car::create([
-            'brand' => $request->get('brand',),
-            'model' => $request->get('model',),
-            'year' => $request->get('year',),
-            'max_speed' => $request->get('max_speed',),
-            'is_automatic' => $request->get('is_automatic',),
-            'engine' => $request->get('engine',),
-            'number_of_doors' => $request->get('number_of_doors',),
-        ]);
+        $data = $request->validated();
+        $car = Car::create($data);
 
         return response()->json($car);
     }
@@ -60,10 +56,11 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCarRequest $request, $id)
     {
+        $data = $request->validated();
         $car = Car::find($id);
-        $car->update($request->all());
+        $car->update($data);
 
         return response()->json($car);
     }
